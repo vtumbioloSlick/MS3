@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .video-container {
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+
+        video {
+            width: 100%;
+            display: block;
+            border-bottom: 2px solid #007BFF;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .controls button, .controls input {
+            background: #fff;
+            color: #007BFF;
+            border: none;
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .controls button:hover, .controls input:hover {
+            background: #ddd;
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-container span {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="video" controls>
+            <source src="Video.mov" type="video/quicktime">
+            Your browser does not support the video tag.
+        </video>
+        <div class="controls">
+            <button id="playPauseBtn">Play</button>
+            <button id="stopBtn">Stop</button>
+            <div class="volume-container">
+                <label for="volume">Volume:</label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+                <span id="volumeValue">100%</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const volumeSlider = document.getElementById('volume');
+        const volumeValue = document.getElementById('volumeValue');
+
+        // Play/Pause functionality
+        playPauseBtn.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.textContent = 'Pause';
+            } else {
+                video.pause();
+                playPauseBtn.textContent = 'Play';
+            }
+        });
+
+        // Stop functionality
+        stopBtn.addEventListener('click', () => {
+            video.pause();
+            video.currentTime = 0;
+            playPauseBtn.textContent = 'Play';
+        });
+
+        // Volume control
+        volumeSlider.addEventListener('input', (e) => {
+            video.volume = e.target.value;
+            volumeValue.textContent = `${Math.round(video.volume * 100)}%`;
+        });
+    </script>
+</body>
+</html>
